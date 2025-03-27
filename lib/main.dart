@@ -1,6 +1,4 @@
-import 'package:devbattle/screens/login_screen.dart';
 import 'package:devbattle/screens/navbar_screen.dart';
-import 'package:devbattle/screens/verification_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       ),
       home: SplashScreen(),
     );

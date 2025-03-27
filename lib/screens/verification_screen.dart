@@ -1,5 +1,4 @@
 import 'package:devbattle/constants/colors.dart';
-import 'package:devbattle/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -43,8 +42,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mediaQuery query = mediaQuery(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(

@@ -1,5 +1,7 @@
 import 'package:devbattle/constants/colors.dart';
 import 'package:devbattle/screens/home_screen.dart';
+import 'package:devbattle/screens/leaderboard_screen.dart';
+import 'package:devbattle/screens/problems_screen.dart';
 import 'package:devbattle/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,12 +15,19 @@ class NavbarScreen extends StatefulWidget {
 
 class _NavbarScreenState extends State<NavbarScreen> {
   var _index = 0;
-  var _pages = [HomePage(), Text('Search'), Text('Profile')];
+  var _pages = [
+    HomePage(),
+    ProblemsScreen(),
+    Text('Profile'),
+    LeaderboardPage(),
+    Text('Statistics'),
+  ];
   @override
   Widget build(BuildContext context) {
     mediaQuery query = mediaQuery(context);
     return Scaffold(
       backgroundColor: BackGroundColor,
+      body: Center(child: _pages[_index]),
       appBar: AppBar(
         toolbarHeight: 70,
         backgroundColor: BackGroundColor,
@@ -77,7 +86,6 @@ class _NavbarScreenState extends State<NavbarScreen> {
           ),
         ),
       ),
-      body: Center(child: _pages[0]),
     );
   }
 
