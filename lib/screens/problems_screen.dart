@@ -21,7 +21,7 @@ class _ProblemsScreenState extends State<ProblemsScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchProblems(); // جلب الأسئلة عند تحميل الصفحة
+    _fetchProblems();
   }
 
   Future<void> _fetchProblems() async {

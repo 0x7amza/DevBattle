@@ -77,4 +77,30 @@ class QuestionApi {
       throw Exception('Error running code: $e');
     }
   }
+
+  Future<List<dynamic>> fetchSubmissionsByQuestionId(String questionId) async {
+    try {
+      var token = await TokenStorage.getToken();
+      final uri = Uri.parse(
+        "$_baseUrl/submissions/$questionId",
+      ).replace(queryParameters: {'token': token});
+
+      final response = await http.get(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        return List<dynamic>.from(json.decode(response.body));
+      } else if (response.statusCode == 404) {
+        throw Exception('Submissions not found');
+      } else {
+        throw Exception(
+          'Failed to load submissions. Status code: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error fetching submissions: $e');
+    }
+  }
 }
