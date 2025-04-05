@@ -1,13 +1,53 @@
+import 'package:devbattle/api/user_api.dart';
 import 'package:devbattle/constants/colors.dart';
+import 'package:devbattle/widgets/Dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:devbattle/utils/token.dart';
+import 'package:devbattle/screens/navbar_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
+  final String email;
+  const VerificationScreen({super.key, required this.email});
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
+  Future<void> _verifyOtp() async {
+    String otpCode = '';
+    for (var controller in controllers) {
+      otpCode += controller.text;
+    }
+    if (otpCode.isEmpty) {
+      showErrorDialog("Please enter a valid OTP.", context);
+      return;
+    }
+
+    try {
+      var result = await UserApi.verifyOTP(widget.email, otpCode);
+      var token = result['token'];
+      print(token);
+      await TokenStorage.saveToken(token);
+
+      var profile = await UserApi.getProfile(token);
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder:
+              (context) => NavbarScreen(
+                statistics: profile['statistics'],
+                user: profile['user'],
+              ),
+        ),
+        (Route<dynamic> route) => false,
+      );
+    } catch (e) {
+      showErrorDialog(e.toString(), context);
+    }
+  }
+
   List<TextEditingController> controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -75,7 +115,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               SizedBox(height: 20),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  for (var controller in controllers) {
+                    if (controller.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('fill all fields')),
+                      );
+                      return;
+                    }
+                  }
+                  _verifyOtp();
+                },
                 child: Container(
                   width: 140,
                   height: 60,

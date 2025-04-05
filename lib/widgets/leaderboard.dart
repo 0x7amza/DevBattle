@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+String _getFirstNameAndLastName(String fullName) {
+  List<String> nameParts = fullName.split(' ');
+
+  if (nameParts.length >= 2) {
+    return '${nameParts[0]} ${nameParts[1]}';
+  } else {
+    return fullName;
+  }
+}
+
 Widget topUsersleaderboardWidget({rank = 1, name, score}) {
   return Column(
     children: [
@@ -72,7 +82,7 @@ Widget topUsersleaderboardWidget({rank = 1, name, score}) {
             ),
             SizedBox(height: 5),
             Text(
-              name.toString(),
+              _getFirstNameAndLastName(name.toString()),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -84,7 +94,7 @@ Widget topUsersleaderboardWidget({rank = 1, name, score}) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${score.toString()}',
+                  score.toString(),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -133,7 +143,7 @@ Widget leaderboardWidget({rank, name, score}) {
 
         SizedBox(width: 10),
         Text(
-          rank.toString() + '. ' + name.toString(),
+          '$rank. $name',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w300,
@@ -144,7 +154,7 @@ Widget leaderboardWidget({rank, name, score}) {
         Row(
           children: [
             Text(
-              '${score.toString()}',
+              score.toString(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final statistics;
+  const HomePage(this.statistics, {super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,11 +26,17 @@ class _HomePageState extends State<HomePage> {
               Statisctics(),
               SizedBox(height: 20),
               Title(icon: 'assets/icons/Favorites.svg', title: 'Favorites'),
-              Row(children: [problem(), problem(), problem(), problem()]),
+              Row(children: [
+               
+                ],
+              ),
 
               SizedBox(height: 20),
               Title(icon: 'assets/icons/recent.svg', title: 'Recent Problems'),
-              Row(children: [problem(), problem(), problem()]),
+              Row(children: [
+                 
+                ],
+              ),
             ],
           ),
         ),
@@ -64,10 +71,10 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1), // لون الظل مع شفافية
-            spreadRadius: 1, // مدى انتشار الظل
-            blurRadius: 5, // مقدار التمويه
-            offset: Offset(0, 3), // إزاحة الظل (أفقي, عمودي)
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -86,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Text(
-                '25/40',
+                widget.statistics['solvedProblems'].toString(),
                 style: TextStyle(
                   color: BlackColor,
                   fontWeight: FontWeight.bold,
@@ -110,7 +117,8 @@ class _HomePageState extends State<HomePage> {
                   SvgPicture.asset('assets/icons/fire.svg', color: BlackColor),
                   SizedBox(width: 5),
                   Text(
-                    '230',
+                    widget.statistics['totalPoints'].toString(),
+
                     style: TextStyle(
                       color: BlackColor,
                       fontWeight: FontWeight.bold,
@@ -136,7 +144,8 @@ class _HomePageState extends State<HomePage> {
                   SvgPicture.asset('assets/icons/globe.svg', color: BlackColor),
                   SizedBox(width: 5),
                   Text(
-                    '230',
+                    widget.statistics['globalRank'].toString(),
+
                     style: TextStyle(
                       color: BlackColor,
                       fontWeight: FontWeight.bold,
@@ -158,7 +167,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Text(
-                '85%',
+                widget.statistics['successRate'].toString(),
+
                 style: TextStyle(
                   color: BlackColor,
                   fontWeight: FontWeight.bold,

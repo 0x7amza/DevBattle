@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NavbarScreen extends StatefulWidget {
-  const NavbarScreen({super.key});
+  var user;
+  var statistics;
+  NavbarScreen({super.key, this.user, this.statistics});
 
   @override
   State<NavbarScreen> createState() => _NavbarScreenState();
@@ -15,13 +17,20 @@ class NavbarScreen extends StatefulWidget {
 
 class _NavbarScreenState extends State<NavbarScreen> {
   var _index = 0;
-  var _pages = [
-    HomePage(),
-    ProblemsScreen(),
-    Text('Profile'),
-    LeaderboardPage(),
-    Text('Statistics'),
-  ];
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      HomePage(widget.statistics),
+      ProblemsScreen(),
+      Text('Profile'),
+      LeaderboardPage(),
+      Text('Statistics'),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     mediaQuery query = mediaQuery(context);
@@ -61,7 +70,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
                         SvgPicture.asset('assets/icons/fire.svg'),
                         SizedBox(width: 5),
                         Text(
-                          '100',
+                          widget.user['score'].toString(),
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         SizedBox(width: 10),
